@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cadastro de Tarefas</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .tarefaPronta {
+            text-decoration: line-through;
+        }
+        h1,h2{
+        color: aliceblue;
+           text-align: center;
+        } 
+    </style>
+</head>
+<body>
+    <div id="tarefasApp" class="p-3 mb-2 bg-secondary text-dark">
+        <h1>Controle suas tarefas</h1>
+        <h2>Adicionar Tarefa</h2>
+        <form v-on:submit="addTarefa">
+            <input type="text" v-model="novaTarefa.titulo" placeholder="Titulo da tarefa">
+            <input class="btn btn-success" type="submit" value="Adicionar">    
+        </form>
+        <hr>
+        <h2>Tarefas a Fazer</h2>
+        <table class="table table-light table-striped" >
+            <thead class="thead-dark">
+                <th>Pronta?</th>
+                <th>Titulo</th>
+                <th>Remover</th>
+            </thead>
+            <tbody>
+                <tr v-for="tarefa in tarefas">
+                    <td><input type="checkbox" v-model="tarefa.pronta"></td>
+                    <td><span v-bind:class="{ tarefaPronta: tarefa.pronta}">{{tarefa.titulo}}</span></td>
+                    <td><button v-on:click="removerTarefa(tarefa)" class="btn btn-dark">Delete</button></td>
+                </tr>
+            </tbody>  
+        </table> 
+    </div>
+    <div class="card text-center">
+            <div class="card-header">
+              TAREFAS
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">CONTROLE SUAS TAREFAS</h5>
+              <p class="card-text">@2018 PRODUZIDO POR PHELLIPE</p>
+              <a href="#" class="btn btn-primary">Voltar ao Topo</a>
+            </div>
+            <div class="card-footer text-muted">
+                
+            </div>
+          </div>
+    <script>
+    var tarefasApp = new Vue({
+        el:"#tarefasApp",
+        data: {
+            tarefas:[
+                {titulo: "Desenvolver API para o sistema", pronta: false},
+                {titulo: "Criar controle de acesso", pronta: false},
+                {titulo: "Enviar novas mudanças para o servidor", pronta: false},
+                {titulo: "teste", pornta: false}
+            ],
+            novaTarefa: {
+                titulo:"",
+                pronta: false
+            }
+        },
+        methods: {
+            addTarefa: function(e){
+                e.preventDefault();
+                this.tarefas.push(this.novaTarefa);
+            },
+            removerTarefa: function(tarefa){
+                this.tarefas.splice(this.tarefas.indexOf(tarefa),1)
+            }
+        }
+
+    });
+    </script>
+</body>
+
+</html>
